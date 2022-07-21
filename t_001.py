@@ -72,5 +72,26 @@ spike = dog("spike",6)
 spike.sit()
 spike.roll_over()
 """
+#create class rocket with attributes name and distance
+class Rocket:
+    def __init__(self,name,distance):
+        self.name=name
+        self.distance=distance
+    def launch(self): # return name of rocket and distance
+        return self.name+" will be traveling to "+self.distance
 
-#create a class calculator with add,sub,mul,div methods
+class MarsRover(Rocket):
+    def __init__(self, name, distance,maker):
+        super().__init__(name,distance)#calling parent class constructor
+        #Rocket.__init__(self,name,distance) can also be used
+        self.maker=maker
+    def getMaker(self):
+        return self.name+" was made by "+self.maker
+
+
+x=Rocket("falcon","moon")
+y=MarsRover("curiosity","mars","spacex")
+
+print(x.launch())
+print(y.launch())
+print(y.getMaker())
