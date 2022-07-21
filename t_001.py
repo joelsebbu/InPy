@@ -71,7 +71,7 @@ class dog:
 spike = dog("spike",6)
 spike.sit()
 spike.roll_over()
-"""
+
 #create class rocket with attributes name and distance
 class Rocket:
     def __init__(self,name,distance):
@@ -106,10 +106,34 @@ class Person:
         return self.__age
     def setAge(self,age):
         self.__age=age
-        
+
 jane=Person("jane",20)
 print(jane.getAge())
 jane.setAge(21)
 print(jane.getAge())
 
+"""
+#polymorphism
+from turtle import shape
 
+
+class Shape:
+    def __init__(self,name):
+        self.name=name
+    def draw(self):
+        print("drawing "+self.name)
+
+class Circle(Shape):
+    def draw(self):
+        print("drawing circle")
+
+class Rectangle(Shape):
+    def draw(self):
+        print("drawing rectangle")
+
+shape=Shape("shape")
+shape.draw()
+circle=Circle("circle")
+circle.draw()
+rectangle=Rectangle("rectangle")
+rectangle.draw()
