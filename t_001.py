@@ -94,4 +94,22 @@ y=MarsRover("curiosity","mars","spacex")
 
 print(x.launch())
 print(y.launch())
-print(y.getMaker())
+print(y.getMaker())                                         
+
+#create class person with attributes name and age 
+#where age is private variable
+class Person:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def getAge(self):
+        return self.__age
+    def setAge(self,age):
+        self.__age=age
+        
+jane=Person("jane",20)
+print(jane.getAge())
+jane.setAge(21)
+print(jane.getAge())
+
+
