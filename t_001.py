@@ -139,7 +139,10 @@ circle.draw()
 rectangle=Rectangle("rectangle")
 rectangle.draw()
 
-"""
+
+
+from ctypes.wintypes import HHOOK
+
 
 class Avenger:
     @classmethod
@@ -171,5 +174,21 @@ heroine.say_class_method()
 hero.say_static_method()
 heroine.say_static_method()
 
+"""
+class House:
+    def __init__(self,price):
+        self.__price=price
+    
+    @property #getter name of function same as variable
+    def price(self):
+        return self.__price
+
+    @price.setter #setter name of function and wrapper same as variable
+    def price(self,price):
+         self.__price=price
+
+house=House(100000)
+house.price=120000
+print(house.price)
 
 
