@@ -48,6 +48,8 @@ class Clinic:
              self.__display(id) 
              print("\n")
 
+
+
 clinic = Clinic("clinic","address")
 clinic.register("jane",20,"12/12/12","F","A+")
 clinic.register("john",21,"12/12/12","M","A+")

@@ -196,7 +196,7 @@ house.price=120000
 print(house.price)
 del house.price
 
-"""
+
 # file handling
 fp=open("text.txt","r")
 #print(fp.read(10))
@@ -204,8 +204,17 @@ print(fp.readline())
 print(fp.readline())
 print(fp.readline())
 
+"""
+class Person:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
 
-
-
-
+    def more(self,a,b):
+        self.a=a
+        self.b=b
+person=Person("jane",20)
+person.more(10,20)
+print(person.a)
+print(person.b)
 
