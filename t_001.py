@@ -187,8 +187,13 @@ class House:
     def price(self,price):
          self.__price=price
 
+    @price.deleter #deleter name of function same as variable
+    def price(self):
+        del self.__price
+
 house=House(100000)
 house.price=120000
 print(house.price)
+del house.price
 
 
