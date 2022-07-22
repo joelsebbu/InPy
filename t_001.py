@@ -174,7 +174,7 @@ heroine.say_class_method()
 hero.say_static_method()
 heroine.say_static_method()
 
-"""
+
 class House:
     def __init__(self,price):
         self.__price=price
@@ -195,5 +195,17 @@ house=House(100000)
 house.price=120000
 print(house.price)
 del house.price
+
+"""
+# file handling
+fp=open("text.txt","r")
+#print(fp.read(10))
+print(fp.readline())
+print(fp.readline())
+print(fp.readline())
+
+
+
+
 
 
