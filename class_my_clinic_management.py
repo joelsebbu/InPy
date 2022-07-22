@@ -47,12 +47,11 @@ class Clinic:
     def delete(self,id):
         self.patients.pop(id)
 
-    def update(self,name,age):
-        for patient in self.patients:
-            if patient.name==name:
-                patient.age=age
-                return
-        return None
+    def update(self,id,**kwargs):
+        keys = list(kwargs.keys())
+        for key in keys:
+            setattr(self.patients[id], key, kwargs[key])
+
     def listAll(self):
         for id in self.patients:
              self.__display(id) 
@@ -62,10 +61,11 @@ clinic = Clinic("clinic","address")
 clinic.register("jane",20,"12/12/12","F","A+")
 clinic.register("john",21,"12/12/12","M","A+")
 clinic.register("Anne",22,"12/12/12","F","B+")
-clinic.search(1)
-print("deleting patient with id 1")
-clinic.delete(1)
-print("after deleting")
-clinic.listAll()
-# clinic.update("jane",22)
+
+# print("deleting patient with id 1")
+# clinic.delete(1)
+# print("after deleting")
+# clinic.listAll()
+clinic.update(2,blood="A-",name="jj")
+clinic.search(2)
 # print(clinic.search("jane").age)
