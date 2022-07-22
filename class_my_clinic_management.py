@@ -12,15 +12,6 @@ class Patient:
 
 class Clinic:
 
-    class Patient:
-        def __init__(self, id, name, age, dob, gender, blood):
-            self.id=id
-            self.name=name
-            self.age=age
-            self.dob=dob
-            self.gender=gender
-            self.blood=blood
-
     def __init__(self,name,address):
         self.name=name
         self.address=address
