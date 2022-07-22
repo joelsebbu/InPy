@@ -44,12 +44,8 @@ class Clinic:
     def search(self,id):
         self.__display(id)
 
-    def delete(self,name):
-        for patient in self.patients:
-            if patient.name==name:
-                self.patients.remove(patient)
-                return
-        return None
+    def delete(self,id):
+        self.patients.pop(id)
 
     def update(self,name,age):
         for patient in self.patients:
@@ -60,10 +56,16 @@ class Clinic:
     def listAll(self):
         for id in self.patients:
              self.__display(id) 
+             print("\n")
 
 clinic = Clinic("clinic","address")
-clinic.admit("jane",20,"12/12/12","F","A+")
-#clinic.search(0)
+clinic.register("jane",20,"12/12/12","F","A+")
+clinic.register("john",21,"12/12/12","M","A+")
+clinic.register("Anne",22,"12/12/12","F","B+")
+clinic.search(1)
+print("deleting patient with id 1")
+clinic.delete(1)
+print("after deleting")
 clinic.listAll()
 # clinic.update("jane",22)
 # print(clinic.search("jane").age)
