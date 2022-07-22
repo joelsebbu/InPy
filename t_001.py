@@ -112,7 +112,7 @@ print(jane.getAge())
 jane.setAge(21)
 print(jane.getAge())
 
-"""
+
 #polymorphism
 from turtle import shape
 
@@ -124,6 +124,7 @@ class Shape:
         print("drawing "+self.name)
 
 class Circle(Shape):
+    
     def draw(self):
         print("drawing circle")
 
@@ -137,3 +138,38 @@ circle=Circle("circle")
 circle.draw()
 rectangle=Rectangle("rectangle")
 rectangle.draw()
+
+"""
+
+class Avenger:
+    @classmethod
+    def say_class_method(cls):
+        print("class method")
+        if(cls.__name__ == "Hero"):
+            print("class method of Hero")
+        elif(cls.__name__ == "Heroine"):
+            print("class method of Heroine")
+    
+    @staticmethod
+    def say_static_method():
+        print("static method")
+
+class Hero(Avenger):
+    def say_method(self): 
+        print("method of Hero")
+    
+class Heroine(Avenger):
+    def say_method(self):
+        print("method of Heroine")
+
+hero=Hero()
+heroine=Heroine()
+
+hero.say_class_method()
+heroine.say_class_method()
+
+hero.say_static_method()
+heroine.say_static_method()
+
+
+
