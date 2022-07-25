@@ -204,7 +204,7 @@ print(fp.readline())
 print(fp.readline())
 print(fp.readline())
 
-"""
+
 class Person:
     def __init__(self,name,age):
         self.name=name
@@ -218,3 +218,69 @@ person.more(10,20)
 print(person.a)
 print(person.b)
 
+
+
+
+# higher order function map filter reduce
+from functools import reduce
+from posixpath import split
+
+
+def add(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def func(a,b,func):
+    return func(a,b)
+
+# print(func(10,20,add))
+# print(func(10,20,sub))
+# print(func(10,20,mul))
+
+
+# a=list(map(int,input().split())) #map function takes function as argument and returns list
+# print(a)
+# c,b=map(int,input().split())
+# print(c,b)
+
+
+#custom function to a map function
+def square(x):
+    return x*x
+
+a=[1 , 2 , 3 , 4 , 5]
+b=list(map(square,a))
+print(b)
+
+
+#custom function to map using lambda
+c=list(map(lambda x:x*x*x,a))
+print(c)
+
+d=list(filter(lambda x:x%2==0,a))
+print(d)
+
+#return if number is odd
+def is_odd(x):
+    if x%2 != 0:
+        return x
+e=list(filter(is_odd,a))
+print(e)
+
+# combo of map and filter
+# f= list(filter(lambda x: x%2==0,map(int, input().split())))
+# print(f)
+
+g=reduce(lambda x,y:min(x,y),a)
+print(g)
+h=reduce(lambda x,y:x+y,a)
+print(h)
+
+
+
+"""
