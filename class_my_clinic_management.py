@@ -1,6 +1,9 @@
 #create clinic management system
 #does following operations: admit, search, delete, update, listAll
 
+from asyncio.windows_events import NULL
+
+
 class Patient:
         def __init__(self, id, name, age, dob, gender, blood):
             self.id=id
@@ -9,6 +12,9 @@ class Patient:
             self.dob=dob
             self.gender=gender
             self.blood=blood
+            self.admitted =False
+            self.token=NULL
+            self.docID =NULL
 
 class Clinic:
 
@@ -19,23 +25,27 @@ class Clinic:
         self.patientCount=0
 
     def __display(self,id):
-        print(self.patients[id].id)
-        print(self.patients[id].name)
-        print(self.patients[id].age)
-        print(self.patients[id].dob)
-        print(self.patients[id].gender)
-        print(self.patients[id].blood)
+        print("ID: ",self.patients[id].id)
+        print("Name: ",self.patients[id].name)
+        print("Age: ",self.patients[id].age)
+        print("DOB: ",self.patients[id].dob)
+        print("Gender: ",self.patients[id].gender)
+        print("Blood: ",self.patients[id].blood)
 
     def register(self,name,age,dob,gender,blood):
         id=self.patientCount
         self.patients[id]=(Patient(id,name,age,dob,gender,blood))
+        rtid =id
         id+=1
         self.patientCount=id
-        
+        return rtid
+
     def search(self,id):
         self.__display(id)
 
     def delete(self,id):
+        print("Deleted patient with id: ",id)
+        self.__display(id)
         self.patients.pop(id)
 
     def update(self,id,**kwargs):
@@ -48,17 +58,70 @@ class Clinic:
              self.__display(id) 
              print("\n")
 
+class IP(Clinic):
+    def __init__(self,name,address):
+        super().__init__(name,address)
+        self.tokenCount=1
+    def admit(self,id,docname):
+        print("Admitted patient with id: ",id)
+        #super.__display(id)
+        self.patients[id].admitted=True
+        self.patients[id].token=self.tokenCount
+        self.docname=docname
+        self.tokenCount+=1
+        return self.patients[id].token
+    
+    def discharge(self,id):
+        print("Discharged patient with id: ",id)
+        #super.__display(id)
+        self.patients[id].admitted=False
+        self.patients[id].token=NULL
+        self.patients[id].docID=NULL
+        self.docname=NULL
+        return self.patients[id].id
 
+class OP(Clinic):
+    def __init__(self,name,address):
+        super().__init__(name,address)
+        self.tokenCount=1
+    def admit(self,name,age,dob,gender,blood,docname):
+        id =super().register(self,name,age,dob,gender,blood)
+        print("Admitted patient with id: ",id)
+        self.__display(id)
+        self.patients[id].admitted=True
+        self.patients[id].token=self.tokenCount
+        self.docname=docname
+        self.tokenCount+=1
+        return self.patients[id].token
+    
+    def discharge(self,id):
+        print("Discharged patient with id: ",id)
+        self.__display(id)
+        self.patients[id].admitted=False
+        self.patients[id].token=NULL
+        self.patients[id].docID=NULL
+        self.docname=NULL
+        return self.patients[id].id
 
 clinic = Clinic("clinic","address")
 clinic.register("jane",20,"12/12/12","F","A+")
 clinic.register("john",21,"12/12/12","M","A+")
 clinic.register("Anne",22,"12/12/12","F","B+")
 
-# print("deleting patient with id 1")
-# clinic.delete(1)
-# print("after deleting")
-# clinic.listAll()
-clinic.update(2,blood="A-",name="jj")
-clinic.search(2)
-# print(clinic.search("jane").age)
+#print("deleting patient with id 1")
+#clinic.delete(1)
+#print("after deleting")
+
+#print("lsiting all patients")
+#clinic.listAll()
+
+#print("Update patient with id 2")
+#clinic.update(2,blood="A-",name="jj")
+
+#print("Searching for patient with id 2")
+#clinic.search(2)
+
+op = OP("op-1","kims")
+ip = IP("ip-1","kims")
+
+print(ip.admit(1,"doc1"))
