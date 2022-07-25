@@ -32,7 +32,7 @@ class Calculate(ABC):
         self.__ans = value
 
     @abstractmethod
-    def calculate(self,a,b):
+    def calculate(self):
         pass
 
 
@@ -46,5 +46,5 @@ class Add(Calculate):
 
 
 cal =Add(10,20)
-cal.calculate
+cal.calculate()
 print(cal.ans)
