@@ -283,4 +283,146 @@ print(h)
 
 
 
+#abstract class
+
+from abc import ABC,abstractmethod
+
+# class Lion:
+#     def __init__(self,name):
+#         self.name=name
+#     def give_meat(self):
+#         print("giving meat to "+self.name)
+#     def sleep(self):
+#         print("sleep")
+
+# class Panda:
+#     def __init__(self,name):
+#         self.name=name
+#     def give_bamboo(self):
+#         print("giving bamboo to "+self.name)
+#     def sleep(self):
+#         print("sleep")
+
+# class Snake:
+#     def __init__(self,name):
+#         self.name=name
+#     def give_prey(self):
+#         print("giving prey to "+self.name)
+#     def sleep(self):
+#         print("sleep")
+
+# simba = Lion("simba")
+# po = Panda("po")
+# anaconda = Snake("anaconda")
+
+# simba.give_meat()
+# po.give_bamboo()
+# anaconda.give_prey()
+
+class Animal(ABC):
+
+    @abstractmethod
+    def feed(self):
+        pass
+
+    @abstractmethod
+    def do(self,action):
+        pass
+
+    @property
+    @abstractmethod
+    def diet(self):
+        pass
+    
+    @property
+    def food(self):
+        return self.__food
+    
+    @food.setter
+    def food(self,food):
+        if food  in self.diet:
+            self.__food=food
+        else:
+            raise ValueError("invalid food")
+
+class Tiger(Animal):
+    def __init__(self,name):
+        self.name=name
+
+    @property
+    def diet(self):
+        return ["meat","grass"]
+
+    def feed(self):
+        print(f"giving {self.__food} to "+self.name)
+
+    def do(self,action):
+        print(action)
+
+class Lion(Animal):
+
+    @property
+    def diet(self):
+        return ["meat","fish"]
+
+    def feed(self):
+        print(f"giving {self.__food} to "+self.name)
+
+    def do(self,action):
+        print(action)
+
+class Panda(Animal):
+    def __init__(self,name):
+        self.name=name
+
+    @property
+    def diet(self):
+        return ["bamboo","grass"]
+
+    def feed(self):
+        print(f"giving {self._food} to "+self.name)
+
+    def do(self,action):
+        print(action)
+
+class Snake(Animal):
+    def __init__(self,name):
+        self.name=name
+
+    @property
+    def diet(self):
+        return ["animals","humans"]
+
+    def feed(self):
+        print(f"giving {self.__food} to "+self.name)
+
+    def do(self,action):
+        print(action)
+
+# simba = Lion("simba")
+# po = Panda("po")
+# anaconda = Snake("anaconda")
+# shereKhan = Tiger("shereKhan")
+
+# shereKhan.feed()
+# simba.feed()
+# po.feed()
+# anaconda.feed()
+
+# zoo=[Lion('simba'),Tiger('shereKhan'),Panda('po'),Snake('anaconda')]
+# for animal in zoo:
+#     animal.feed()
+#     animal.do("sleep %s"%animal.name) 
+
+
 """
+
+
+
+
+# file handling
+fp=open("text.txt","r")
+#print(fp.read(10))
+print(fp.readline())
+print(fp.readline())
+print(fp.readline())
