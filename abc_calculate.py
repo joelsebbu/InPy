@@ -21,11 +21,16 @@ class Calculate(ABC):
 
     @a.setter
     def a(self, value):
-        self.__a = value
-
+        if isinstance(value, int) or isinstance(value, float):
+            self.__a = value
+        else:
+            raise ValueError("a must be a number")
     @b.setter
     def b(self, value):
-        self.__b = value
+        if isinstance(value, int) or isinstance(value, float):
+            self.__b = value
+        else:
+            raise ValueError("b must be a number")
 
     @ans.setter
     def ans(self, value):
@@ -35,7 +40,6 @@ class Calculate(ABC):
     def calculate(self):
         pass
 
-
 class Add(Calculate):
     def __init__(self,a,b):
         self.a = a
@@ -44,7 +48,30 @@ class Add(Calculate):
     def calculate(self):
         self.ans= self.a + self.b
 
+class Sub(Calculate):
+    def __init__(self,a,b):
+        self.a = a
+        self.b = b
 
-cal =Add(10,20)
+    def calculate(self):
+        self.ans= self.a - self.b
+
+class Div(Calculate):
+    def __init__(self,a,b):
+        self.a = a
+        self.b = b
+
+    def calculate(self):
+        self.ans= self.a / self.b
+
+class Mul(Calculate):
+    def __init__(self,a,b):
+        self.a = a
+        self.b = b
+
+    def calculate(self):
+        self.ans= self.a * self.b
+
+cal =Div(10,20)
 cal.calculate()
 print(cal.ans)
