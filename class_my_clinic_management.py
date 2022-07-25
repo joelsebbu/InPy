@@ -65,9 +65,9 @@ class IP(Clinic):
     def admit(self,id,docname):
         print("Admitted patient with id: ",id)
         #super.__display(id)
-        self.patients[id].admitted=True
-        self.patients[id].token=self.tokenCount
-        self.docname=docname
+        Clinic.patients[id].admitted=True
+        Clinic.patients[id].token=self.tokenCount
+        Clinic.patients[id].docname=docname
         self.tokenCount+=1
         return self.patients[id].token
     
