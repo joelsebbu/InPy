@@ -415,14 +415,31 @@ class Snake(Animal):
 #     animal.do("sleep %s"%animal.name) 
 
 
-"""
 
 
 
 
 # file handling
-fp=open("text.txt","r")
+#fp=open("text.txt","r")
 #print(fp.read(10))
-print(fp.readline())
-print(fp.readline())
-print(fp.readline())
+# print(fp.readline())
+# print(fp.readline())
+# print(fp.readline())
+
+# lines=fp.readline()
+# print(lines)
+
+#append mode
+# fp = open("text.txt", "a")
+# fp.write("\nhello")
+
+fp=open("text.txt","r")
+print(fp.tell())
+fp.readline()
+print(fp.tell())
+#fp.write("hello")  # clears the existing items in file
+fp.close()
+
+
+"""
+
