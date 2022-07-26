@@ -66,12 +66,12 @@ class IP(Clinic):
         super().__init__(name,address)
         self.tokenCount=1
         self.clinic=clinic
-    def admit(self,id,docname):
+    def admit(self,id,docID):
         print("Admitted patient with id: ",id)
         #super.__display(id)
         self.clinic.patients[id].admitted=True
         self.clinic.patients[id].token=self.tokenCount
-        self.clinic.patients[id].docname=docname
+        self.clinic.patients[id].docID=docID
         self.tokenCount+=1
         #self.search(id)
         return "tokenID",self.clinic.patients[id].token
@@ -82,32 +82,33 @@ class IP(Clinic):
         self.clinic.patients[id].admitted=False
         self.clinic.patients[id].token=NULL
         self.clinic.patients[id].docID=NULL
-        self.clinic.docname=NULL
+        self.clinic.docID=NULL
         #self.search(id)
         return "tokenID",self.clinic.patients[id].id
 
 class OP(Clinic):
-    def __init__(self,name,address):
+    def __init__(self,clinic,name,address):
         super().__init__(name,address)
-        self.tokenCount=1
-    def admit(self,name,age,dob,gender,blood,docname):
-        id =super().register(self,name,age,dob,gender,blood)
+        self.clinic=clinic
+        self.tokenCount=100
+    def admit(self,name,age,dob,gender,blood,docID):
+        id =self.clinic.register(name,age,dob,gender,blood)
         print("Admitted patient with id: ",id)
-        self.__display(id)
-        self.patients[id].admitted=True
-        self.patients[id].token=self.tokenCount
-        self.docname=docname
+        # self.__display(id)
+        self.clinic.patients[id].admitted=True
+        self.clinic.patients[id].token=self.tokenCount
+        self.clinic.patients[id].docID=docID
         self.tokenCount+=1
-        return "tokenID",self.patients[id].token
+        return {"tokenID":self.clinic.patients[id].token,"patientID":self.clinic.patients[id].id}
     
     def discharge(self,id):
         print("Discharged patient with id: ",id)
-        self.__display(id)
-        self.patients[id].admitted=False
-        self.patients[id].token=NULL
-        self.patients[id].docID=NULL
-        self.docname=NULL
-        return "tokenID",self.patients[id].id
+        #self.__display(id)
+        self.clinic.patients[id].admitted=False
+        self.clinic.patients[id].token=NULL
+        self.clinic.patients[id].docID=NULL
+        self.clinic.patients[id].docID=NULL
+        return "tokenID",self.clinic.patients[id].id
 
 clinic = Clinic("clinic","address")
 clinic.register("jane",20,"12/12/12","F","A+")
@@ -127,9 +128,25 @@ clinic.register("Anne",22,"12/12/12","F","B+")
 #print("Searching for patient with id 2")
 #clinic.search(2)
 
-# op = OP("op-1","kims")
+#op and ip at the clinic
+op = OP(clinic,"op-1","kims")
 ip = IP(clinic,"ip-1","kims")
 
-print(ip.admit(2,"doc1"))
+# admitting patient with id 2 to doc with id 123
+token1 = ip.admit(2,"123")
+print(token1)#his token id
 
-# clinic.admit(2)
+
+#admitting a new patient requires information to be filled and then admitted to the clinic to doc with ID 224
+token =op.admit("juan",20,"12/12/12","F","A+","224")
+print(token)
+# his token id and patient id
+
+clinic.listAll()
+#listing all patients
+
+ip.discharge(2)
+#discharging patient with id 2
+
+op.discharge(3)
+#discharging patient with id 3
