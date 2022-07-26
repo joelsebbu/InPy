@@ -441,5 +441,42 @@ print(fp.tell())
 fp.close()
 
 
+
+import os
+#create a new directory
+#os.mkdir("mydir")
+#print current wirking directory
+#print(os.getcwd())
+#change current working directory
+#os.chdir("mydir")
+#print(os.getcwd())
+
+#to go back the directory
+#os.chdir("..")
+#print(os.getcwd())
+
+#delete directory that we created
+#os.rmdir("mydir")
+
+result =os.listdir(os.getcwd())
+print(result)
+
+
+
+
+
+import subprocess
+with open("text.txt","w") as fp:
+    #subprocess.check_call(["python","fileoutputsave.py",stdout=fp])
+    subprocess.check_call(["python","fileoutputsave.py"],stdout=fp)
+
+
 """
+
+a=[None]
+if 2 not in a:
+    print("2 not in a")
+else:
+    print("2 in a")
+
 
