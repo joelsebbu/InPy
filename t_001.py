@@ -516,3 +516,6 @@ except:
 
 
 """
+import pyodbc
+conn = pyodbc.connect('Driver={SQL Server};')
+
