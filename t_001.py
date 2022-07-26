@@ -515,7 +515,61 @@ except:
     print('file cannot be opened')
 
 
+
+
+
 """
+#connect py and mssql
+# Set-ExecutionPolicy -Scope CurrentUser 
+# Unrestricted 
+# -ExecutionPolicy Unrestricted
 import pyodbc
-conn = pyodbc.connect('Driver={SQL Server};')
+conn = pyodbc.connect('''
+    Driver={SQL Server};
+    Server=DESKTOP-UDFFDCR\SQLEXPRESS;
+    Database=emp_db;
+    Trusted_Connection=yes;
+''')
+try:
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE EmployeeMaster3(
+        Id INT IDENTITY PRIMARY KEY,
+        EmployeeCode VARCHAR (10),
+        EmployeeName VARCHAR (25),
+        DepartmentCode VARCHAR (10),
+        LocationCode VARCHAR (10),
+        Salary INT
+    );
+    ''')
+except Exception as e:
+    print(type(e).__name__)
+# for row in cursor:
+#     print(row)
+
+print("Checkpoint 1")
+try:
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM EmployeeMaster;
+    ''')
+    # for row in cursor.fetchall():
+    #    print(row[2])
+    # emp=[{'EmployeeCode':row[1],'EmployeeName':row[2]} for row in cursor.fetchall()]
+    # print(emp)
+
+    cursor.execute('''
+        Insert into EmployeeMaster3(EmployeeCode,EmployeeName,DepartmentCode,LocationCode,Salary)
+        values(?,?,?,?,?);'''
+        ,('E002','Johnny','D002','L002',20000))
+    cursor.execute('''
+        Select * from EmployeeMaster3;
+    ''')
+    for row in cursor.fetchall():
+        print(row)
+except:
+    print("error in selecting")
+
+conn.commit()
+conn.close()
 
