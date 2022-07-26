@@ -62,7 +62,11 @@ class Div(Calculate):
         self.b = b
 
     def calculate(self):
-        self.ans= self.a / self.b
+        try:
+            self.ans= self.a / self.b
+        except ZeroDivisionError:
+            print("ZeroDivisionError")
+            self.ans= None
 
 class Mul(Calculate):
     def __init__(self,a,b):
