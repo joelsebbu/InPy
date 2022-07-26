@@ -471,7 +471,7 @@ with open("text.txt","w") as fp:
     subprocess.check_call(["python","fileoutputsave.py"],stdout=fp)
 
 
-"""
+
 class A:
     def __init__(self,a):
         self.a=a
@@ -485,3 +485,34 @@ class B(A):
 aa= A(8)
 bb =B()
 bb.setVal(aa)
+ 
+
+
+#exception handling
+# try:
+#     div = 10/10
+#     print(div)
+# except ZeroDivisionError:
+#     print("zero division error")
+# except Exception as e:
+#     print(e)
+#     print(type(e).__name__)
+# else:
+#     print("no exception")
+# finally:
+#     print("run no matter what")
+
+#nested try catch
+try:
+    fp=open('tt.txt','a')
+    try:
+        fp.write("hello")
+    except:
+        print("error in writing")
+    finally:
+        fp.close() # have to close the fp pointer no matter what
+except:
+    print('file cannot be opened')
+
+
+"""
