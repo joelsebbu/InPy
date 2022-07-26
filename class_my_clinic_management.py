@@ -31,6 +31,9 @@ class Clinic:
         print("DOB: ",self.patients[id].dob)
         print("Gender: ",self.patients[id].gender)
         print("Blood: ",self.patients[id].blood)
+        print("Admitted: ",self.patients[id].admitted)
+        print("Admitted to doctor: ",self.patients[id].docID)
+        print("current holding token ID: ",self.patients[id].token)
 
     def register(self,name,age,dob,gender,blood):
         id=self.patientCount
@@ -59,26 +62,29 @@ class Clinic:
              print("\n")
 
 class IP(Clinic):
-    def __init__(self,name,address):
+    def __init__(self,clinic,name,address):
         super().__init__(name,address)
         self.tokenCount=1
+        self.clinic=clinic
     def admit(self,id,docname):
         print("Admitted patient with id: ",id)
         #super.__display(id)
-        Clinic.patients[id].admitted=True
-        Clinic.patients[id].token=self.tokenCount
-        Clinic.patients[id].docname=docname
+        self.clinic.patients[id].admitted=True
+        self.clinic.patients[id].token=self.tokenCount
+        self.clinic.patients[id].docname=docname
         self.tokenCount+=1
-        return self.patients[id].token
+        #self.search(id)
+        return "tokenID",self.clinic.patients[id].token
     
     def discharge(self,id):
         print("Discharged patient with id: ",id)
         #super.__display(id)
-        self.patients[id].admitted=False
-        self.patients[id].token=NULL
-        self.patients[id].docID=NULL
-        self.docname=NULL
-        return self.patients[id].id
+        self.clinic.patients[id].admitted=False
+        self.clinic.patients[id].token=NULL
+        self.clinic.patients[id].docID=NULL
+        self.clinic.docname=NULL
+        #self.search(id)
+        return "tokenID",self.clinic.patients[id].id
 
 class OP(Clinic):
     def __init__(self,name,address):
@@ -92,7 +98,7 @@ class OP(Clinic):
         self.patients[id].token=self.tokenCount
         self.docname=docname
         self.tokenCount+=1
-        return self.patients[id].token
+        return "tokenID",self.patients[id].token
     
     def discharge(self,id):
         print("Discharged patient with id: ",id)
@@ -101,7 +107,7 @@ class OP(Clinic):
         self.patients[id].token=NULL
         self.patients[id].docID=NULL
         self.docname=NULL
-        return self.patients[id].id
+        return "tokenID",self.patients[id].id
 
 clinic = Clinic("clinic","address")
 clinic.register("jane",20,"12/12/12","F","A+")
@@ -121,7 +127,9 @@ clinic.register("Anne",22,"12/12/12","F","B+")
 #print("Searching for patient with id 2")
 #clinic.search(2)
 
-op = OP("op-1","kims")
-ip = IP("ip-1","kims")
+# op = OP("op-1","kims")
+ip = IP(clinic,"ip-1","kims")
 
-print(ip.admit(1,"doc1"))
+print(ip.admit(2,"doc1"))
+
+# clinic.admit(2)

@@ -75,3 +75,15 @@ class Mul(Calculate):
 cal =Div(10,20)
 cal.calculate()
 print(cal.ans)
+
+add = Add(10,20)
+add.calculate()
+print(add.ans)
+
+sub = Sub(10,20)
+sub.calculate()
+print(sub.ans)
+
+mul = Mul(10,20)
+mul.calculate()
+print(mul.ans)

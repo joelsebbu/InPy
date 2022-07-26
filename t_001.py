@@ -472,11 +472,16 @@ with open("text.txt","w") as fp:
 
 
 """
+class A:
+    def __init__(self,a):
+        self.a=a
+class B(A):
+    def __init__(self):
+        super().__init__(self)
+    def setVal(self,aa):
+        aa.a+=1
+        print(aa.a)
 
-a=[None]
-if 2 not in a:
-    print("2 not in a")
-else:
-    print("2 in a")
-
-
+aa= A(8)
+bb =B()
+bb.setVal(aa)
