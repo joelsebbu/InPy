@@ -30,7 +30,7 @@ def createPhonebook(conn):
     except Exception as e:
         print(type(e).__name__)
         print("Create table exception")
-    return conn
+    
 
 def addRecord(conn,name,phone):
     try:
@@ -41,7 +41,7 @@ def addRecord(conn,name,phone):
     except Exception as e:
         print(e)
         print("Insert Error")
-    return conn
+    
 
 def searchByName(conn,name):
     cursor=conn.cursor()
@@ -52,7 +52,7 @@ def searchByName(conn,name):
     print("Name\tNumber")
     for row in cursor.fetchall():
         print(row[0],'\t',row[1])
-    return conn
+    
 
 def searchByNumber(conn,phone):
     cursor=conn.cursor()
@@ -63,7 +63,7 @@ def searchByNumber(conn,phone):
     print("Name\tNumber")
     for row in cursor.fetchall():
         print(row[0],'\t',row[1])
-    return conn
+    
 
 def listAll(conn):
 
@@ -75,7 +75,7 @@ def listAll(conn):
     for row in cursor.fetchall():
         print(row[0],'\t',row[1])
 
-    return conn
+    
 
 def deleteByName(conn,name):
     cursor=conn.cursor()
@@ -85,7 +85,7 @@ def deleteByName(conn,name):
     )
     # result=[{'name':row[0],'number':row[1]} for row in cursor]
     # print(result)
-    return conn
+    
 
 def deleteByNumber(conn,phone):
     cursor=conn.cursor()
@@ -95,32 +95,31 @@ def deleteByNumber(conn,phone):
     )
     # result=[{'name':row[0],'number':row[1]} for row in cursor]
     # print(result)
-    return conn
+    
 # initialize connection
 conn=None
 conn=init(conn)
 
 # create PhoneBook
-# conn=createPhonebook(conn)
+# createPhonebook(conn)
 
 # add Record to Phonebook
-# conn=addRecord(conn,'john',12345)
-# conn=addRecord(conn,'juan',23456)
-# conn=addRecord(conn,'jamie',34567)
-# conn=addRecord(conn,'jordan',45678)
+# addRecord(conn,'john',12345)
+# addRecord(conn,'juan',23456)
+# addRecord(conn,'jamie',34567)
+# addRecord(conn,'jordan',45678)
 
-#list all contact
-# conn =listAll(conn)
+# list all contact
+# listAll(conn)
 
-#search by name and number
-# conn =searchByName(conn,'juan')
+# search by name and number
+# searchByName(conn,'juan')
 # conn =searchByNumber(conn,12345)
 
-#delete contact by name and number
-
-# conn = deleteByName(conn,'juan')
-# conn = deleteByNumber(conn,45678)
-# conn =listAll(conn)
+# delete contact by name and number
+# deleteByName(conn,'john')
+# deleteByNumber(conn,45678)
+# listAll(conn)
 
 # commit the connection and close
 conn.commit()
