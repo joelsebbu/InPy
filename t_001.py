@@ -488,38 +488,8 @@ bb.setVal(aa)
  
 
 
-#exception handling
-# try:
-#     div = 10/10
-#     print(div)
-# except ZeroDivisionError:
-#     print("zero division error")
-# except Exception as e:
-#     print(e)
-#     print(type(e).__name__)
-# else:
-#     print("no exception")
-# finally:
-#     print("run no matter what")
 
-#nested try catch
-try:
-    fp=open('tt.txt','a')
-    try:
-        fp.write("hello")
-    except:
-        print("error in writing")
-    finally:
-        fp.close() # have to close the fp pointer no matter what
-except:
-    print('file cannot be opened')
-
-
-
-
-
-"""
-#connect py and mssql
+ #connect py and mssql
 # Set-ExecutionPolicy -Scope CurrentUser 
 # Unrestricted 
 # -ExecutionPolicy Unrestricted
@@ -572,4 +542,127 @@ except:
 
 conn.commit()
 conn.close()
+
+
+
+
+#exception handling
+# try:
+#     div = 10/10
+#     print(div)
+# except ZeroDivisionError:
+#     print("zero division error")
+# except Exception as e:
+#     print(e)
+#     print(type(e).__name__)
+# else:
+#     print("no exception")
+# finally:
+#     print("run no matter what")
+
+#nested try catch
+# try:
+#     fp=open('tt.txt','a')
+#     try:
+#         fp.write("hello")
+#     except:
+#         print("error in writing")
+#     finally:
+#         fp.close() # have to close the fp pointer no matter what
+# except:
+#     print('file cannot be opened')
+
+# x='hi'
+# if type(x) is not int:
+#     raise TypeError("type error")
+    
+# print("Checkpoint -1")
+
+
+
+# create user def exception class
+class myError(Exception):
+    
+    def __init__(self,val):
+        self.val =val
+    
+    def __str__(self):
+        return repr(self.val)
+
+class manyError(Exception):
+    pass
+class divideByZero(manyError):
+    pass
+try:
+    x=0
+    if x == 0:
+        raise(divideByZero)
+    if x is not int:
+        raise(myError("Not a number"))
+except myError as error:
+    print(error)
+except divideByZero:
+    print("divide by zero")
+
+
+
+
+
+
+from re import A
+
+
+class Car:
+    def __repr__(self) :
+        return Car.__name__
+    pass
+car = Car()
+
+class Add:
+    def __init__(self,a,b) -> None:
+        self.a = a
+        self.b = b
+
+    def __add__(self, other):
+        # return self.a+other.a , self.b+other.b # will be a tuple output
+        return Add(self.a+other.a , self.b+other.b) # will be an output of the form Add class
+    
+    def __repr__(self):
+        return f'{self.a},{self.b}'
+
+a=Add(3,5)
+b=Add(6,8)
+
+c=a+b
+print(c)
+
+
+
+
+
+"""
+#dunder class methods
+
+
+from re import S
+
+
+class Softwares:
+    name=[]
+    versions={}
+
+    def __init__(self,names) -> None:
+        if names:
+            self.names =names.copy()
+            for name in names:
+                self.versions[name] =1
+        else:
+            raise Exception("Names cannot be empty")
+
+# override the str dunder 
+def __str__(self):
+    s=''
+    for key,value in self.versions.items():
+       s+=f'{key}:{value}\n'
+    return s 
 
