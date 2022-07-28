@@ -36,13 +36,14 @@ class Booking:
             select count(*) from {trainId}
             where waitList =0;'''
         )
-        for traveler in cursor.fetchall():
-            print(traveler)
-        return 0
+        count=cursor.fetchall()
+        return count[0][0]
+
     def book(self,aadhar,name,fromId,toId):
         trainId = fromId+'_'+toId
         print(trainId)
         rt=self.check(trainId)
+        
 
 
 south =Booking()
