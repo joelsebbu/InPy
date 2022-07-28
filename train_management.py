@@ -32,11 +32,12 @@ class Booking:
         # self.toId=toId
     @connectDB
     def check(cursor,self,trainId):
-        cursor.execute(''' 
-            select count(*) from ?
-            where waitList =0;''',(trainId)
+        cursor.execute(f''' 
+            select count(*) from {trainId}
+            where waitList =0;'''
         )
-        print(cursor)
+        for traveler in cursor.fetchall():
+            print(traveler)
         return 0
     def book(self,aadhar,name,fromId,toId):
         trainId = fromId+'_'+toId
