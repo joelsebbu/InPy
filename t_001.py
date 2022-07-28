@@ -644,25 +644,103 @@ print(c)
 #dunder class methods
 
 
-from re import S
+# from re import S
 
 
+# class Softwares:
+#     name=[]
+#     versions={}
+
+#     def __init__(self,names) -> None:
+#         if names:
+#             self.names =names.copy()
+#             for name in names:
+#                 self.versions[name] =1
+#         else:
+#             raise Exception("Names cannot be empty")
+
+# # override the str dunder 
+# def __str__(self):
+#     s=''
+#     for key,value in self.versions.items():
+#        s+=f'{key}:{value}\n'
+#     return s 
+
+# sw1= Softwares(['ps','msword','mspaint'])
+# print(sw1)
+
+#demonstrating the class dunder methods
+#creating a class with empty list of software  names and an empty dict of software name and version as key value pair
 class Softwares:
-    name=[]
-    versions={}
+    name = []
+    versions = {} #hold the key value pair of sw and sw version
 
-    def __init__(self,names) -> None:
-        if names:
-            self.names =names.copy()
+    #defining (overrriding) the constructor
+    #invoked when we create an object and give the names list
+    # sw1 = Softwares(['ps','msword','mspaint'])
+    def __init__(self,names): #getting sw names as a list
+        if names:  # if names is not empty
+            self.names = names.copy() #create a copy of the list
             for name in names:
-                self.versions[name] =1
+                self.versions[name] = 1 #initialie sw version to 1 for all software names
         else:
-            raise Exception("Names cannot be empty")
+            raise Exception("Names cant be empty")
+    
+    #overriding the str dunder for displaying the list of sws
+    #will be invoked when calling print(objname)
+    #sw1 = Softwares(['ps','msword','mspaint'])
+    #print(sw1)
+    def __str__(self):
+        #loop through the dictionary and print the list
+        s="The list of softwares and its versions are: \n"
+        for key,value in self.versions.items():
+            s += f"{key} : {value} \n"
+        return s
 
-# override the str dunder 
-def __str__(self):
-    s=''
-    for key,value in self.versions.items():
-       s+=f'{key}:{value}\n'
-    return s 
+    #overriding the __setitem__ dunder method
+    def __setitem__(self,name,version):
+        if name in self.versions:
+            self.versions[name]=version
+        else:
+            raise Exception("Name dosent exist")
 
+    def __getitem__(self,name):
+        if name in self.versions:
+            return self.versions[name]
+        else:
+            raise Exception('Name dosent exist')
+
+    def __delitem__(self, name):
+        if name in self.versions:
+            del self.versions[name]
+            self.names.remove(name)
+        else:
+            raise Exception('Name dosent exist')
+
+    def __len__(self):
+        return len(self.names)
+
+    def __contains__(self,name):
+        rt =False
+        if name in self.names:
+           rt=True
+        return rt 
+
+#creating the software class object
+sw1 = Softwares(['ps','msword','mspaint'])
+#print the software class object
+
+print(sw1)
+
+# set new version
+sw1['msword']=2
+print(sw1['msword'])
+
+del sw1['msword']
+
+print(len(sw1))
+
+if 'ps' in sw1:
+    print("exist")
+else:
+    print("Nope")
