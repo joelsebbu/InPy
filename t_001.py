@@ -640,7 +640,7 @@ print(c)
 
 
 
-"""
+
 #dunder class methods
 
 
@@ -744,3 +744,65 @@ if 'ps' in sw1:
     print("exist")
 else:
     print("Nope")
+
+create and read from csv file
+import csv
+# with open('sw.csv','r') as f:
+#     reader = csv.reader(f)
+#     for row in reader:
+#         print(row)
+#Working with csv files using python 
+#using the csv module reader() method
+import csv  #imiporting the csv module/library
+
+#opening the csv file
+file = open("sw.csv")
+#using the csv.reader to read the file obj
+csvreader = csv.reader(file)
+
+#declaring empty header and rows list
+header = []
+rows =[]
+
+#using the next()method to read the cirrent line and stop at the start of next line
+header = next(csvreader)
+print(header)
+
+#using a for loop read the rows below header
+for row in csvreader:
+    rows.append(row)
+print(rows)
+
+#close the file handler
+file.close()
+
+#opening csv file without importing any modules
+with open('sw.csv') as file:
+    content = file.readlines()
+
+#using stip to strip the unwanted char
+#using the list comprehension
+content = [i.strip() for i in content]
+#header will be the first index value
+header = content[:1]
+#rows will be from first index
+rows = content[1:]
+print(header)
+print(rows)
+
+import csv
+#performing write to the csv file
+header = ['Names','Experience','Salary']
+data = [['Anu',9,40000],['Vinu',8,30000],['Manu',5,25000]]
+
+with open('sw.csv','w',newline="") as file:
+    csvwriter = csv.writer(file) #creting the csv writer object
+    csvwriter.writerow(header) #write the header contents
+    csvwriter.writerows(data) #write the row contents
+
+"""
+
+a=(1,5)
+print(a)
+a=(2,3)
+print(a)

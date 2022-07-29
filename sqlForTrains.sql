@@ -1,0 +1,1 @@
+select count(*) from TVM_ERN where waitList =0;
