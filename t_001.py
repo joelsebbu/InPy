@@ -804,5 +804,5 @@ with open('sw.csv','w',newline="") as file:
 
 a=(1,5)
 print(a)
-a=(2,3)
+a=(1,3)
 print(a)
