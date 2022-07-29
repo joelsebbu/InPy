@@ -8,7 +8,7 @@ def connectDB(func):
             conn= pyodbc.connect('''
                  
                 Driver={SQL Server};
-                Server=DESKTOP-UDFFDCR\SQLEXPRESS;
+                Server=DESKTOP-AFJLVL3\SQLEXPRESS;
                 Database=IRCTC;
                 Trusted_Connection=yes; 
         ''')
@@ -30,12 +30,30 @@ class Booking:
         # self.name=name
         # self.fromId =fromId
         # self.toId=toId
+    @connectDB
+    def showPassengers(cursor,self,trainId):
+        cursor.execute(f"select * from {trainId} where waitList = 0")
+        print("aadhar\tFrom\tTo")
+        for i in cursor:
+            print(i[0],"\t",i[1],"\t",i[2])
 
     @connectDB
-    def checkif(cursor,self,trainId,count,rt):
-        if count <5:
+    def check(cursor,self,trainId,waitList=0,max=5):
+        ogTrainId=trainId
+        cursor.execute(f''' 
+            select count(*) from {trainId}
+            where waitList ={waitList};'''
+        )
+        # print('train id',trainId)
+        count =cursor.fetchall()
+        rt =(trainId,'unavailable')
+        print("count 0 0 ",count[0][0])
+        if count[0][0] <max:
            #  print('count',count)
-            rt =(trainId,'available')
+            if waitList == 0: 
+                rt =(trainId,'available')
+            elif waitList == 1:
+                rt=(trainId,'waitList')
         else:
             print("Enter first else on ",trainId)
             cursor.execute(f"select _index from Trains where trainId = '{trainId}';")
@@ -44,35 +62,21 @@ class Booking:
             if nextIndex <= 3: #static #next train shift
                 cursor.execute(f"select trainId from Trains where _index = '{nextIndex}'")
                 
-                self.check(cursor.fetchall()[0][0])
+                rt = self.check(cursor.fetchall()[0][0])
             else: # to wait list
-                print("Enter else")
-                #self.checkWaitlist(ogTrainId)
-        return rt
-    @connectDB
-    def check(cursor,self,trainId):
-        ogTrainId=trainId
-        cursor.execute(f''' 
-            select count(*) from {trainId}
-            where waitList =0;'''
-        )
-        # print('train id',trainId)
-        count =cursor.fetchall()
-        rt =(trainId,'unavailable')
-        print("count 0 0 ",count[0][0])
-        rt=self.checkif(trainId,count[0][0],rt)
-       
+                rt =self.check(ogTrainId,1,2)
         print(rt)
         return rt
 
     @connectDB
-    def bookAt(cursor,self,trainId,aadhar,name,fromId,toId):
+    def bookAt(cursor,self,trainId,aadhar,name,fromId,toId,waitList=0):
+        print("Inside book at")
         cursor.execute(f"insert into Bookings values({aadhar},'{name}','{trainId}');")
         cursor.execute(f"select stId from Stations where name = '{fromId}'")
         fromId =cursor.fetchall()[0][0]
         cursor.execute(f"select stId from Stations where name = '{toId}'")
         toId =cursor.fetchall()[0][0]
-        cursor.execute(f"insert into {trainId} values({aadhar},{fromId},{toId},0);")
+        cursor.execute(f"insert into {trainId} values({aadhar},{fromId},{toId},{waitList});")
 
     def book(self,aadhar,name,fromId,toId):
         trainId = fromId+'_'+toId
@@ -82,15 +86,31 @@ class Booking:
         if rt[1] == 'unavailable':
             print("No Seats Available")
         elif rt[1] == 'available':
-            # self.bookAt(rt[0],aadhar,name,fromId,toId,)
+            self.bookAt(rt[0],aadhar,name,fromId,toId)
             print("Booked a seat on "+rt[0]+". Use your aadhar as ticket")
         elif rt[1] == 'waitList':
             print("You are in the wait list for the train: "+rt[0])
 
 
 south =Booking()
-# south.book(5457,'Joe','TVM','ERN')
-# south.book(5458,'kate','TVM','ERN')
-# south.book(5459,'jill','TVM','ERN')
-south.book(5500,'Matt','TVM','ERN')
-
+#create a menu to book a ticket and show the list of passengers
+while 1:
+    print("1. Book a ticket")
+    print("2. Show the list of passengers")
+    print("3. Exit")
+    choice = int(input("Enter your choice: "))
+    if choice == 1:
+        aadhar = int(input("Enter your aadhar: "))
+        name = input("Enter your name: ")
+        fromId = input("Enter your from station: ")
+        toId = input("Enter your to station: ")
+        south.book(aadhar,name,fromId,toId)
+    elif choice == 2:
+        trainId = input("Enter the train id: ")
+        south.showPassengers(trainId)
+    elif choice == 3:
+        print("Thank you for using our service")
+        exit()
+    else:
+        print("Invalid choice")
+        exit()
