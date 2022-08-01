@@ -33,13 +33,6 @@ def connectDB(func):
             return rt
     return innerWrapper
 
-class Patient:
-    def __init__(self, id, name, age, gender, blood):
-        self.id=id
-        self.name=name
-        self.age=age
-        self.gender=gender
-        self.blood=blood
 
 class CMS:
     def __init__(self,name):
