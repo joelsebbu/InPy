@@ -2,6 +2,8 @@ import re
 import random
 
 class Enterprise:
+    def __init__(self):
+        self.categories ={}
     @property
     @classmethod
     def capacity(cls):
@@ -53,5 +55,10 @@ class Categories(Enterprise):
         
 
 Enterprise.capacity = 10
-c1 = Categories('Health')
-print(c1.addProduct("prime",40,5,0,48))
+abc =Enterprise()
+abc.categories['health'] =Categories('health')
+
+print(abc.categories['health'].addProduct('prime',40,4,0,44))
+print(abc.categories['health'].addProduct('gaterade',50,10,0,55))
+
+
