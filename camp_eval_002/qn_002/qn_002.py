@@ -44,8 +44,6 @@ class Patient:
 class CMS:
     def __init__(self,name):
         self.name = name
-        self.patients={}
-        self.patientCount=0
     @connectDB
     def initiate(cursor,self):
         try:
@@ -108,14 +106,87 @@ class CMS:
             where patientId = {id} ;
         ''')
 
+    @connectDB
+    def _update(cursor,self,id,kwargs):
+        keys = list(kwargs.keys())
+        for key in keys:
+            if type(kwargs[key]) is str:
+                kwargs[key] = "'"+kwargs[key]+"'"
+            cursor.execute(f"""
+                update {self.name}
+                set {key} = {kwargs[key]}
+                where patientId ={id};
+            """)
     
+    def update(self,id,**kwargs):
+        self._update(id,kwargs)
+       
+            
 
 jubilee = CMS("jubilee")
 #jubilee.initiate()
+
 # jubilee.register(2,'juan','M',22,'B+')
 # jubilee.listAll()
 # jubilee.search(2)
 
-jubilee.delete(1)
-jubilee.listAll()
+# jubilee.delete(1)
+# jubilee.listAll()
+# jubilee.update(2,age=2)
 
+def validate(n):
+
+    if type(n) == int:
+        return n
+    elif n == '':
+        n=validate(input("Enter Value again:"))
+    elif n=="quit()":
+        return 
+    return n
+        
+
+#create a menu to insert search delete list and update patient record
+while(1):
+    print("1. Add\n2.Update\n3.Delete\n4.List\n5.Search\n6.Exit")
+    choice = int(input("Enter your choice: "))
+    if choice == 1:
+        id = int(input("Enter patientId: "))
+        name =validate( input("Enter patientName: "))
+        gender = validate(input("Enter gender: "))
+        age = validate(int(input("Enter age: ")))
+        blood =validate(input("Enter blood type:"))
+        jubilee.register(id,name,gender,age,blood)
+    elif choice ==2:
+        print("\n1.name\n2.gender\n3.age\n4.bloodType")
+        ch=int(input())
+        if ch ==1:
+            id = int(input("Enter id"))
+            name =input("Name: ")
+            jubilee.update(id,paitentName =name)
+        elif ch ==2:
+            id = int(input("Enter id"))
+            gender =input("gender: ")
+            jubilee.update(id,gender =gender)
+        elif ch ==3:
+            id = int(input("Enter id"))
+            age =int(input("Name: "))
+            jubilee.update(id,age =age)
+        elif ch == 4:
+            id = int(input("Enter id"))
+            bloodtype =input("bloodType: ")
+            jubilee.update(id,blood=bloodtype)
+        else:
+            print("Invalid Choice")
+    elif choice ==3:
+        id = int(input("Enter id: "))
+        jubilee.delete(id)
+    elif choice ==4:
+        jubilee.listAll()
+    elif choice ==5:
+        id = int(input("Enter id: "))
+        jubilee.search(id)
+    elif choice ==6:
+        print("Exiting")
+        break
+    else:
+        print("Invalid Choice")
