@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <h3>My feedback form</h3>
+    <form enctype="multipart/form-data" action="serve.py" method ="post">
+        <ul>
+            <li>
+                Name: <input type="text" name="name">
+            </li>
+            <br>
+            <li>
+                Email: <input type="text" name="email">
+            </li>
+            <br>
+            <li>
+                password: <input type="password" name="password">
+            </li>
+            <br>
+            <li>
+                <b><i>Please check all the emotions</i></b>
+                <ul>
+                    <li>
+                        <label for="angry">Angry</label>
+                        <input type="checkbox" name="emtions" id="angry" value="angry">
+                    </li>
+                    <li>
+                        <label for="happy">Happy</label>
+                        <input type="checkbox" name="emtions" id="happy" value="happy">
+                    </li>
+                    <li>
+                        <label for="sad">Sad</label>
+                        <input type="checkbox" name="emtions" id="sad" value="sad">
+                    </li>
+                    <li>
+                        <label for="surprised">Surprised</label>
+                        <input type="checkbox" name="emtions" id="surprised" value="surprised">
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li>
+                <b><i>How Satisfied are you with the service</i></b>
+                <ul>
+                    <li>
+                        <label for="1">Very Dissatisfied</label>
+                        <input type="radio" name="satisfied" id="1" value="1">
+                    </li>
+                    <li>
+                        <label for="2">Dissatisfied</label>
+                        <input type="radio" name="satisfied" id="2" value="2">
+                    </li>
+                    <li>
+                        <label for="3">Don't Care</label>
+                        <input type="radio" name="satisfied" id="3" value="3">
+                    </li>
+                    <li>
+                        <label for="4">Satisfied</label>
+                        <input type="radio" name="satisfied" id="4" value="4">
+                    </li>
+                    <li>
+                        <label for="5">Very Satisfied</label>
+                        <input type="radio" name="satisfied" id="5" value="5">
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li>
+                Comments: <textarea name="comments" rows="5" cols="40" placeholder="Enter commment"></textarea>
+            </li>
+            <br>
+            <li>
+                Bio photo: <input type="file" name="photo">
+            </li>
+            <br>
+            <li>
+                location : 
+                <select name="loc">
+                    <option value="tvm">TVM</option>
+                    <option value="koz">KOZ</option>
+                    <option value="alp">ALP</option>
+                    <option value="ern">ERN</option>
+                </select>
+            </li>
+
+        </ul>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
