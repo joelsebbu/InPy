@@ -1,27 +1,27 @@
-import functools
+
 import socket
+import json
 
-def connect(func):
-    @functools.wraps(func)
-    def wrapper(*args):
-        host = socket.gethostname()
-        port = 5000
-        client_socket = socket.socket()
+def toJson(data):
+    return json.dumps(data)
 
-        client_socket.connect((host, port))
+def toDict(data):
+    return json.loads(data)
 
-        func(*args)
+def send(data): # dict format
+    host = socket.gethostname()
+    port = 5000
+    client_socket = socket.socket()
+    client_socket.connect((host, port))
+    client_socket.send(toJson(data).encode())
+    rtData = client_socket.recv(1024).decode()
+    client_socket.close()
+    return toDict(rtData) # dict format
 
-        client_socket.close()
-    return wrapper
+def display(data):
+    print(data['0'])
 
-@connect
-def send(client_socket,data):
-    client_socket.send(data.encode())
-    data = client_socket.recv(1024).decode()
-    print(data)
-
-def main():
+def start():
     print("Welcome to the phonebook")
     print("Type 'q' to quit")
     print("Type 'p' to print the phonebook")
@@ -31,26 +31,39 @@ def main():
     print("Type 'c' to search by number")
     ch = input(" -> ")
     while ch != 'q':
+        data ={}
         if ch == 'p':
             print("Phonebook:")
             print("Name\t\tPhone")
-            print("------------------------------")
-            print("John\t\t12345")
-            print("Mary\t\t54321")
-            print("------------------------------")
+            data["ch"] ="p"
+            rt =send(data)
+            display(rt)
         elif ch == 'a':
             name = input("Name: ")
             phone = input("Phone: ")
-            send(ch+" "+name+" "+phone)
+            data["ch"]=ch
+            data["name"]=name
+            data["phone"]=phone
+            rt =send(data)
+            display(rt)
         elif ch == 'd':
-            phone = input("Phone: ")
-            send(ch+" "+phone)
+            name = input("Name: ")
+            data["ch"]=ch
+            data["name"]=name
+            rt=send(data)
+            display(rt)
         elif ch == 's':
             name = input("Name: ")
-            send(ch+" "+name)
+            data["ch"]=ch
+            data["name"]=name
+            rt=send(data)
+            display(rt)
         elif ch == 'c':
             phone = input("Phone: ")
-            send(ch+" "+phone)
+            data["ch"]=ch
+            data["phone"]=phone
+            rt=send(data)
+            display(rt)
         else:
             print("Invalid choice")
 
@@ -60,9 +73,8 @@ def main():
         print("Type 'a' to add a new entry")
         print("Type 'd' to delete an entry")
         print("Type 's' to search for an entry")
-        print("Type 'c' to change an entry")
+        print("Type 'c' to search by phone")
         ch = input(" -> ")
 
-
 if __name__ == '__main__':
-    main()
+    start()
